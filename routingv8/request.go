@@ -60,7 +60,9 @@ type RoutesRequest struct {
 	// To not take time into account use DepartureTimeAny.
 	DepartureTime string
 	// Spans define which content attributes that are included in the response spans
-	Spans []SpanAttribute
+	Spans       []SpanAttribute
+	RoutingMode RoutingMode
+	TrafficMode TrafficMode
 }
 
 type ReturnAttribute string
@@ -502,6 +504,27 @@ func (t *SpanAttribute) String() string {
 		return string(SpanAttributeNames)
 	case SpanAttributeMaxSpeed:
 		return string(SpanAttributeMaxSpeed)
+	default:
+		return invalid
+	}
+}
+
+type TrafficMode int
+
+const (
+	TrafficModeUnspecified TrafficMode = iota
+	TrafficModeDefault
+	TrafficModeDisabled
+)
+
+func (t *TrafficMode) String() string {
+	switch *t {
+	case TrafficModeUnspecified:
+		return unspecified
+	case TrafficModeDefault:
+		return "default"
+	case TrafficModeDisabled:
+		return "disabled"
 	default:
 		return invalid
 	}

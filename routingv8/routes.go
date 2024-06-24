@@ -68,7 +68,20 @@ func (s *RoutingService) Routes(
 		}
 		values.Add("avoid[features]", strings.Join(areas, ","))
 	}
-
+	rm := req.RoutingMode.String()
+	if rm == invalid {
+		return nil, fmt.Errorf("invalid routingmode")
+	}
+	if rm != unspecified {
+		values.Add("routingMode", rm)
+	}
+	trm := req.TrafficMode.String()
+	if trm == invalid {
+		return nil, fmt.Errorf("invalid trafficmode")
+	}
+	if trm != unspecified {
+		values.Add("trafficMode", trm)
+	}
 	r, err := s.Client.NewRequest(ctx, u, http.MethodGet, values.Encode(), nil)
 	if err != nil {
 		return nil, fmt.Errorf("unable to create get request: %v", err)

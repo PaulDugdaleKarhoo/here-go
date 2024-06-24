@@ -220,6 +220,28 @@ func TestRoutingervice_Routes_QueryParams(t *testing.T) {
 				"&return=summary&transportMode=car" +
 				"&via=57.695538%2C11.992594&via=59.32341%2C18.096137",
 		},
+		{
+			name: "with routingmode",
+			request: &routingv8.RoutesRequest{
+				Origin:        origin,
+				Destination:   destination,
+				TransportMode: routingv8.TransportModeCar,
+				RoutingMode:   routingv8.RoutingModeShort,
+			},
+			expected: "destination=59.337492%2C18.063672&origin=57.707752%2C11.949767" +
+				"&return=summary&routingMode=short&transportMode=car",
+		},
+		{
+			name: "with trafficmode",
+			request: &routingv8.RoutesRequest{
+				Origin:        origin,
+				Destination:   destination,
+				TransportMode: routingv8.TransportModeCar,
+				TrafficMode:   routingv8.TrafficModeDisabled,
+			},
+			expected: "destination=59.337492%2C18.063672&origin=57.707752%2C11.949767" +
+				"&return=summary&trafficMode=disabled&transportMode=car",
+		},
 	} {
 		tt := tt
 		t.Run(tt.name, func(t *testing.T) {
