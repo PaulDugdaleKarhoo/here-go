@@ -49,6 +49,7 @@ type CalculateMatrixRequest struct {
 type RoutesRequest struct {
 	Origin        GeoWaypoint
 	Destination   GeoWaypoint
+	Via           []GeoWaypoint
 	TransportMode TransportMode
 	AvoidAreas    []AreaFeature
 	// Which attributes to return in the response.

@@ -199,6 +199,27 @@ func TestRoutingervice_Routes_QueryParams(t *testing.T) {
 			},
 			errStr: "spans parameter also requires that the polyline option is set in the return parameter",
 		},
+		{
+			name: "with vias",
+			request: &routingv8.RoutesRequest{
+				Origin:      origin,
+				Destination: destination,
+				Via: []routingv8.GeoWaypoint{
+					{
+						Lat:  57.695538,
+						Long: 11.992594,
+					},
+					{
+						Lat:  59.323410,
+						Long: 18.096137,
+					},
+				},
+				TransportMode: routingv8.TransportModeCar,
+			},
+			expected: "destination=59.337492%2C18.063672&origin=57.707752%2C11.949767" +
+				"&return=summary&transportMode=car" +
+				"&via=57.695538%2C11.992594&via=59.32341%2C18.096137",
+		},
 	} {
 		tt := tt
 		t.Run(tt.name, func(t *testing.T) {
