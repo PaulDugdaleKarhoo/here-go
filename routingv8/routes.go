@@ -42,6 +42,9 @@ func (s *RoutingService) Routes(
 	values.Add("transportMode", tm)
 	values.Add("origin", fmt.Sprintf("%v,%v", req.Origin.Lat, req.Origin.Long))
 	values.Add("destination", fmt.Sprintf("%v,%v", req.Destination.Lat, req.Destination.Long))
+	for _, via := range req.Via {
+		values.Add("via", fmt.Sprintf("%v,%v", via.Lat, via.Long))
+	}
 	if len(req.Spans) > 0 {
 		if !returnContains(req.Return, PolylineReturnAttribute) {
 			return nil, errors.New("spans parameter also requires that the polyline option is set in the return parameter")
